@@ -7,9 +7,10 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-button (click)="getMovies()" shape="round" expand="block" fill="outline">Search Harry Potter movies</ion-button>
   <ion-list>
-    <ion-item button [routerLink]="['/', 'movie-details', 'idPelicula']">
-      <ion-label>{{ movieList }}</ion-label>
+    <ion-item button *ngFor="let movie of (movieList | async)" [routerLink]="['/', 'movie-details', movie.id]">
+      <ion-label text-wrap>{{ movie.original_title }}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
