@@ -10,25 +10,33 @@
 <ion-content padding>
   <ion-list *ngIf="movieDetails">
     <ion-item >
-      <ion-label text-wrap>Nombre: {{ movieDetails.original_title }}</ion-label>
+        <ion-label text-wrap>
+            <b>Name:</b> {{ movieDetails.original_title }}
+        </ion-label>
     </ion-item>
 
     <ion-item >
-      <ion-label>Fecha: {{ movieDetails.release_date }}</ion-label>
+        <ion-label>
+            <b>Release date:</b> {{ movieDetails.release_date | date: 'dd/MM/yyyy' }}
+        </ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>Idioma: </ion-label>
-      <ion-label *ngFor="let language of movieDetails.spoken_languages"> {{ language.name }}</ion-label>
+        <ion-label>
+          <b>Language(s):</b> {{ languages }}
+        </ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>Descripción: {{ movieDetails.overview }}</ion-label>
+        <ion-label text-wrap>
+            <b>Description:</b> {{ movieDetails.overview }}
+        </ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>Géneros:</ion-label>
-      <ion-label text-wrap *ngFor="let genre of movieDetails.genres"> {{ genre.name }}</ion-label>
+        <ion-label text-wrap>
+          <b>Genres:</b> {{ genres }}
+        </ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

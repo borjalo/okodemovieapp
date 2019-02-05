@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {MovieService} from '../../services/movie.service';
+import { MovieService } from '../../services/movie.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -9,7 +9,8 @@ import {MovieService} from '../../services/movie.service';
 })
 export class MovieDetailsPage implements OnInit {
   private movieDetails: any;
-  private genres: any;
+  private genres: any = [];
+  private languages: any = [];
 
   constructor(private ar: ActivatedRoute,
               private movieService: MovieService) { }
@@ -19,6 +20,14 @@ export class MovieDetailsPage implements OnInit {
 
     this.movieService.getMovieDetails(movieID).subscribe(data => {
       this.movieDetails = data;
+
+      this.movieDetails.genres.forEach((genre) => {
+        this.genres.push(genre.name);
+      });
+
+      this.movieDetails.spoken_languages.forEach((language) => {
+        this.languages.push(language.name);
+      });
     });
 
   }
