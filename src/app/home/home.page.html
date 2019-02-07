@@ -1,16 +1,41 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
       Movies
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-button (click)="getMovies()" shape="round" expand="block" fill="outline">Search Harry Potter movies</ion-button>
+<ion-content>
+  <ion-searchbar [(ngModel)]="search" (ionChange)="getMovies($event)"></ion-searchbar>
+
+  <ion-item>
+    <ion-label>Select</ion-label>
+    <ion-select [(ngModel)]="type" interface="popover" (ionChange)="getMovies($event)">
+      <ion-select-option value="movie">Movies</ion-select-option>
+      <ion-select-option value="tv">Series</ion-select-option>
+      <ion-select-option value="episode">Episode</ion-select-option>
+
+    </ion-select>
+  </ion-item>
+
   <ion-list>
-    <ion-item button *ngFor="let movie of (movieList | async)" [routerLink]="['/', 'movie-details', movie.id]">
-      <ion-label text-wrap>{{ movie.original_title }}</ion-label>
+    <ion-item button *ngFor="let item of (movieList | async)" [routerLink]="['/', 'movie-details', item.id, {type: type}]">
+      <ion-avatar slot="start">
+        <img [src]="imageURL + item.poster_path" alt="NP" *ngIf='item.poster_path'>
+      </ion-avatar>
+
+      <ion-label *ngIf="type == 'movie'" text-wrap>
+        <h3><b>{{ item.original_title }}</b></h3>
+        <ion-icon name="star" color="warning"></ion-icon>
+        {{ item.vote_average }}/10
+      </ion-label>
+
+      <ion-label *ngIf="type == 'tv'" text-wrap>
+        <h3><b>{{ item.original_name }}</b></h3>
+        <ion-icon name="star" color="warning"></ion-icon>
+        {{ item.vote_average }}
+      </ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

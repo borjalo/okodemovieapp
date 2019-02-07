@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
@@ -7,36 +7,60 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-list *ngIf="movieDetails">
-    <ion-item >
-        <ion-label text-wrap>
-            <b>Name:</b> {{ movieDetails.original_title }}
-        </ion-label>
-    </ion-item>
+<ion-content>
+    <ion-card *ngIf="movieDetails">
+        <ion-card-header>
+            <ion-card-title *ngIf="type === 'movie'">
+                {{ movieDetails.original_title }}
+            </ion-card-title>
+            <ion-card-title *ngIf="type === 'tv'">
+                {{ movieDetails.original_name }}
+            </ion-card-title>
+            <ion-card-subtitle *ngIf="type === 'movie'">
+                {{ movieDetails.release_date | date: 'dd/MM/yyyy'}}
+            </ion-card-subtitle>
+            <ion-card-subtitle *ngIf="type === 'tv'">
+                {{ movieDetails.first_air_date | date: 'dd/MM/yyyy'}}
+            </ion-card-subtitle>
+        </ion-card-header>
 
-    <ion-item >
-        <ion-label>
-            <b>Release date:</b> {{ movieDetails.release_date | date: 'dd/MM/yyyy' }}
-        </ion-label>
-    </ion-item>
+        <ion-card-content text-center>
+            <img [src]="imageURL + movieDetails.poster_path" class="img">
 
-    <ion-item>
-        <ion-label>
-          <b>Language(s):</b> {{ languages }}
-        </ion-label>
-    </ion-item>
+            <h2 *ngIf="type == 'movie'"><b>{{ movieDetails.tagline }}</b></h2><br>
+            {{ movieDetails.overview }}
 
-    <ion-item>
-        <ion-label text-wrap>
-            <b>Description:</b> {{ movieDetails.overview }}
-        </ion-label>
-    </ion-item>
+            <ion-item lines="none">
+                <ion-icon slot="start" name="star"></ion-icon>
+                <ion-label text-wrap>{{ movieDetails.vote_average }}/10</ion-label>
+            </ion-item>
 
-    <ion-item>
-        <ion-label text-wrap>
-          <b>Genres:</b> {{ genres }}
-        </ion-label>
-    </ion-item>
-  </ion-list>
+            <ion-item lines="none" *ngIf="type === 'movie'">
+                <ion-icon slot="start" name="globe"></ion-icon>
+                <ion-label>{{ languages }}</ion-label>
+            </ion-item>
+            <ion-item lines="none" *ngIf="type === 'tv'">
+                <ion-icon slot="start" name="globe"></ion-icon>
+                <ion-label>{{ movieDetails.original_language }}</ion-label>
+            </ion-item>
+
+            <ion-item lines="none" *ngIf="type === 'tv'">
+                <ion-icon slot="start" name="tv"></ion-icon>
+                <ion-label>{{ movieDetails.number_of_seasons }}</ion-label>
+            </ion-item>
+            <ion-item lines="none" *ngIf="type === 'tv'">
+                <ion-icon slot="start" name="albums"></ion-icon>
+                <ion-label>{{ movieDetails.number_of_episodes }}</ion-label>
+            </ion-item>
+
+            <ion-item lines="none" *ngIf="type === 'movie'">
+                <ion-icon slot="start" name="albums"></ion-icon>
+                <ion-label text-wrap>{{ genres }}</ion-label>
+            </ion-item>
+
+            <ion-button expand="full" (click)="openWeb()" *ngIf="movieDetails.homepage && movieDetails.homepage != null">
+                Open website
+            </ion-button>
+        </ion-card-content>
+    </ion-card>
 </ion-content>
