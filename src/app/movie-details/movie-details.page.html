@@ -31,7 +31,7 @@
             {{ movieDetails.overview }}
 
             <ion-item lines="none">
-                <ion-icon slot="start" name="star"></ion-icon>
+                <ion-icon slot="start" name="star" color="warning"></ion-icon>
                 <ion-label text-wrap>{{ movieDetails.vote_average }}/10</ion-label>
             </ion-item>
 
@@ -58,7 +58,7 @@
                 <ion-label text-wrap>{{ genres }}</ion-label>
             </ion-item>
 
-            <ion-button expand="full" (click)="openWeb()" *ngIf="movieDetails.homepage && movieDetails.homepage != null">
+            <ion-button fill="clear" (click)="openWeb()" *ngIf="movieDetails.homepage && movieDetails.homepage != null">
                 Open website
             </ion-button>
         </ion-card-content>
